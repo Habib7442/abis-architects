@@ -1,26 +1,304 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
+/* ------------------------------------------------------------------
+   Design tokens: DESIGN.md §3 and §14. Components use these only.
+   ------------------------------------------------------------------ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: #f7f7f5;
+  --concrete: #e3e4e1;
+  --concrete-2: #cfd1cd;
+  --concrete-tint: #daddd6;
+  --ink: #0c0d0d;
+  --ink-2: #141616;
+  --ink-3: #1d2020;
+  --slate: #5e6461;
+  --mist: #a3a8a4;
+  --gold: #cfa548;
+  --gold-text: #745812;
+  --gold-tint: rgb(207 165 72 / 0.12);
+  --line: rgb(12 13 13 / 0.12);
+  --line-dark: rgb(255 255 255 / 0.1);
+  --success: #2f7d4f;
+  --warning: #b4561e;
+  --error: #b3261e;
+  --whatsapp: #25d366;
+  --whatsapp-text: #0c0d0d;
+  --sky: #cfe0ee;
+  /* Sampled from /hero/hero-desktop.webp at ~30% height, where its masked-in sky becomes opaque. */
+  --hero-sky: #c8e1fa;
+
+  /* Scrollbar (light). Dark scrollable boxes override these under [data-theme="dark"]. */
+  --scrollbar-size: 8px;
+  --scrollbar-track: var(--paper);
+  --scrollbar-thumb: color-mix(in srgb, var(--slate) 40%, transparent);
+  --scrollbar-thumb-hover: color-mix(in srgb, var(--ink) 70%, transparent);
+  --scrollbar-thumb-active: var(--gold);
+
+  --radius: 2px;
+  --ease-arch: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --header-h: 78px;
+  --pad: clamp(20px, 5vw, 72px);
+
+  /* shadcn variables, mapped to DESIGN.md tokens */
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: #ffffff;
+  --card-foreground: var(--ink);
+  --popover: #ffffff;
+  --popover-foreground: var(--ink);
+  --primary: var(--gold);
+  --primary-foreground: var(--ink);
+  --secondary: var(--concrete);
+  --secondary-foreground: var(--ink);
+  --muted: var(--concrete);
+  --muted-foreground: var(--slate);
+  --accent: var(--gold-tint);
+  --accent-foreground: var(--ink);
+  --destructive: var(--error);
+  --border: var(--line);
+  --input: var(--concrete-2);
+  --ring: var(--gold);
+}
+
+[data-theme="dark"] {
+  --scrollbar-track: var(--ink-2);
+  --scrollbar-thumb: rgb(255 255 255 / 0.25);
+  --scrollbar-thumb-hover: var(--gold);
+  --scrollbar-thumb-active: var(--gold);
 }
 
 @theme inline {
+  --color-paper: var(--paper);
+  --color-concrete: var(--concrete);
+  --color-concrete-2: var(--concrete-2);
+  --color-concrete-tint: var(--concrete-tint);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-slate: var(--slate);
+  --color-mist: var(--mist);
+  --color-gold: var(--gold);
+  --color-gold-text: var(--gold-text);
+  --color-gold-tint: var(--gold-tint);
+  --color-line: var(--line);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-whatsapp: var(--whatsapp);
+  --color-sky: var(--sky);
+  --color-hero-sky: var(--hero-sky);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* next/font CSS variables (set in app/layout.tsx) */
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+  --font-display: var(--font-archivo), system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
+  --font-heading: var(--font-archivo), system-ui, sans-serif;
+
+  /* Everything is 2px (DESIGN §5.3); pills use rounded-full. */
+  --radius-sm: var(--radius);
+  --radius-md: var(--radius);
+  --radius-lg: var(--radius);
+  --radius-xl: var(--radius);
+  --radius-2xl: var(--radius);
+  --radius-3xl: var(--radius);
+  --radius-4xl: var(--radius);
+
+  --ease-arch: var(--ease-arch);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply font-sans;
+    -webkit-text-size-adjust: 100%;
+    /* Reserve the scrollbar's space so layout doesn't jump between short and long pages. */
+    scrollbar-gutter: stable;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ------------------------------------------------------------------
+   Scrollbar: desktop pointer devices only; touch devices keep the native one.
+   Chrome 121+ ignores ::-webkit-scrollbar on any element that has scrollbar-width or
+   scrollbar-color set, so the standard properties are given only to browsers without
+   ::-webkit-scrollbar (Firefox). WebKit/Blink get the richer pseudo-element styles.
+   ------------------------------------------------------------------ */
+@media (hover: hover) and (pointer: fine) {
+  @supports not selector(::-webkit-scrollbar) {
+    html,
+    [data-theme="dark"] {
+      scrollbar-width: thin;
+      scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: var(--scrollbar-size);
+    height: var(--scrollbar-size);
+  }
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-corner {
+    background: var(--scrollbar-track);
+    border: 0;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+    background-clip: padding-box;
+    border: 2px solid transparent; /* the floating gap */
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scrollbar-thumb-hover);
+  }
+  ::-webkit-scrollbar-thumb:active {
+    background-color: var(--scrollbar-thumb-active);
+  }
+  ::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
+
+/* Hide the scrollbar but keep scrolling (carousels, mobile menu). Works on every device. */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Scroll progress bar (components/site/scroll-progress.tsx)
+   Scroll-driven where supported; a JS fallback sets the transform otherwise.
+   ------------------------------------------------------------------ */
+@keyframes scroll-progress-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 55; /* above the header (50), below the mobile menu (60) */
+  height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    animation: scroll-progress-grow linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Type helpers (DESIGN §4.2)
+   ------------------------------------------------------------------ */
+@utility text-display {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 5.6vw, 88px);
+  line-height: 1.02;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+@utility text-lead {
+  font-size: clamp(18px, 1.5vw, 22px);
+  line-height: 1.45;
+}
+
+@utility text-chip {
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------------
+   Motion: hero entrance (DESIGN §10). Off under reduced motion.
+   ------------------------------------------------------------------ */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.anim-rise {
+  animation: rise-in 900ms var(--ease-arch) both;
+  animation-delay: calc(var(--i, 0) * 110ms + 150ms);
+}
+
+.anim-fade {
+  animation: fade-in 1200ms var(--ease-arch) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-rise,
+  .anim-fade {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }
