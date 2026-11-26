@@ -5,10 +5,9 @@ import { ArrowRight } from "lucide-react";
 import { HeroParallax } from "@/components/home/hero-parallax";
 import { RotatingPhrase } from "@/components/home/rotating-phrase";
 import { buttonVariants } from "@/components/ui/button";
-import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-const PHRASES = ["that last.", "families love.", "made for the Northeast."] as const;
+const PHRASES = ["that last.", "families love.", "built to stand strong."] as const;
 
 /** Stagger index for the entrance animation. */
 const rise = (i: number) => ({ "--i": i }) as CSSProperties;
@@ -21,7 +20,7 @@ const rise = (i: number) => ({ "--i": i }) as CSSProperties;
  * - The photo is pinned to the bottom at full width (cover). Roofs start ~43% down the photo,
  *   so the text's bottom padding reserves 57% of the photo's height and the text can never
  *   sit on the roofs.
- * - The bottom 80px fades to paper to flow into the next section.
+ * - The bottom 80px fades to concrete, the next section's background, so they join seamlessly.
  *
  * --hero-img-h  rendered photo height (>= 100vw / 1.777, so cover always scales by height)
  */
@@ -52,7 +51,7 @@ export function Hero() {
       </HeroParallax>
 
       {/* Soft fade into the next section */}
-      <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-20 bg-[linear-gradient(to_bottom,transparent,var(--paper))]" />
+      <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-20 bg-[linear-gradient(to_bottom,transparent,var(--concrete))]" />
 
       {/* Text: confined to the sky above the houses */}
       <div
@@ -79,7 +78,7 @@ export function Hero() {
         </h1>
 
         <p style={rise(1)} className="anim-rise mt-6 text-[17px] leading-[1.55] font-medium text-slate">
-          Design, construction and interiors — one trusted team since {site.foundedYear}.
+          From Silchar to across India. Design, construction and interiors by one team.
         </p>
 
         <div style={rise(2)} className="anim-rise mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">

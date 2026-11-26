@@ -1,34 +1,34 @@
+import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 /**
- * PLACEHOLDER wordmark. Replace with the client's vector logo (DESIGN §13) once supplied.
- * Ink on light surfaces; pass tone="gold" on dark surfaces.
+ * Header lockup: the client's gold "abis" monogram (raster, from abis_construction_logo_square.webp)
+ * with the name set as live text beside it. At header size the logo's own 3D wordmark is only
+ * ~7px tall and smudges on 1× screens, so the name is typeset in ink instead: sharp at any DPI.
+ * The full raster lockup (/brand/abis-logo.webp) is for larger uses (footer, OG image, PDFs).
  */
-export function Logo({ tone = "ink", className }: { tone?: "ink" | "gold"; className?: string }) {
+export function Logo({ className }: { className?: string }) {
   return (
     <Link
       href="/"
-      aria-label="The ABIS Architects, home"
-      className={cn(
-        "inline-flex min-h-11 items-center gap-2.5 rounded-sm",
-        tone === "gold" ? "text-gold" : "text-ink",
-        className,
-      )}
+      aria-label="The ABIS Construction, home"
+      className={cn("inline-flex min-h-11 items-center gap-3 rounded-sm", className)}
     >
-      <span
-        aria-hidden
-        className="font-display text-[22px] leading-none font-extrabold tracking-[-0.04em] lowercase [font-stretch:115%]"
-      >
-        abis
-      </span>
-      <span
-        aria-hidden
-        className="border-l border-current/25 pl-2 text-[9px] leading-[1.25] font-semibold tracking-[0.16em] uppercase"
-      >
-        The ABIS
-        <br />
-        Architects
+      <Image
+        src="/brand/abis-mark.webp"
+        alt=""
+        width={517}
+        height={240}
+        loading="eager"
+        sizes="96px"
+        className="h-9 w-auto lg:h-10"
+      />
+      <span aria-hidden className="border-l border-line pl-3 font-display leading-none text-ink uppercase">
+        <span className="block text-[13px] font-extrabold tracking-[0.12em] lg:text-[14px]">The ABIS</span>
+        <span className="mt-1 block text-[10px] font-semibold tracking-[0.24em] text-slate lg:text-[11px]">
+          Construction
+        </span>
       </span>
     </Link>
   );

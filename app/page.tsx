@@ -1,13 +1,11 @@
+import { FounderStats } from "@/components/home/founder-stats";
 import { Hero } from "@/components/home/hero";
-import { SiteHeader } from "@/components/site/header";
 
 export default function Home() {
   return (
-    <>
-      <SiteHeader />
-      <main>
-        <Hero />
-      </main>
-    </>
+    <main>
+      <Hero />
+      <FounderStats />
+    </main>
   );
 }

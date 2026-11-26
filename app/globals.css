@@ -6,19 +6,22 @@
    Design tokens: DESIGN.md §3 and §14. Components use these only.
    ------------------------------------------------------------------ */
 :root {
-  --paper: #f7f7f5;
-  --concrete: #e3e4e1;
-  --concrete-2: #cfd1cd;
-  --concrete-tint: #daddd6;
+  /* Light surfaces are cool and clean: never cream, beige or warm grey. */
+  --paper: #ffffff;
+  --concrete: #f3f5f7;
+  --concrete-2: #e3e7eb;
+  --concrete-tint: #e9edf1;
   --ink: #0c0d0d;
   --ink-2: #141616;
   --ink-3: #1d2020;
-  --slate: #5e6461;
-  --mist: #a3a8a4;
+  --slate: #5b6670;
+  --mist: #a0a9b2;
+  /* Gold is only for the logo, rating stars, the scroll progress bar and accents on dark sections. */
   --gold: #cfa548;
-  --gold-text: #745812;
   --gold-tint: rgb(207 165 72 / 0.12);
-  --line: rgb(12 13 13 / 0.12);
+  --line: #e3e7eb;
+  /* Muted ink for secondary marks (e.g. the "+" in stats): 45% keeps 3:1 on concrete. */
+  --ink-muted: rgb(12 13 13 / 0.45);
   --line-dark: rgb(255 255 255 / 0.1);
   --success: #2f7d4f;
   --warning: #b4561e;
@@ -48,21 +51,23 @@
   --card-foreground: var(--ink);
   --popover: #ffffff;
   --popover-foreground: var(--ink);
-  --primary: var(--gold);
-  --primary-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: #ffffff;
   --secondary: var(--concrete);
   --secondary-foreground: var(--ink);
   --muted: var(--concrete);
   --muted-foreground: var(--slate);
-  --accent: var(--gold-tint);
+  --accent: var(--concrete);
   --accent-foreground: var(--ink);
   --destructive: var(--error);
   --border: var(--line);
   --input: var(--concrete-2);
-  --ring: var(--gold);
+  --ring: var(--ink);
+  --focus: var(--ink);
 }
 
 [data-theme="dark"] {
+  --focus: var(--gold);
   --scrollbar-track: var(--ink-2);
   --scrollbar-thumb: rgb(255 255 255 / 0.25);
   --scrollbar-thumb-hover: var(--gold);
@@ -80,9 +85,9 @@
   --color-slate: var(--slate);
   --color-mist: var(--mist);
   --color-gold: var(--gold);
-  --color-gold-text: var(--gold-text);
   --color-gold-tint: var(--gold-tint);
   --color-line: var(--line);
+  --color-ink-muted: var(--ink-muted);
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-error: var(--error);
@@ -143,7 +148,7 @@
     line-height: 1.65;
   }
   :focus-visible {
-    outline: 2px solid var(--gold);
+    outline: 2px solid var(--focus);
     outline-offset: 3px;
   }
 }
@@ -240,7 +245,7 @@
 /* ------------------------------------------------------------------
    Type helpers (DESIGN §4.2)
    ------------------------------------------------------------------ */
-@utility text-display {
+@utility type-display {
   font-family: var(--font-display);
   font-size: clamp(44px, 5.6vw, 88px);
   line-height: 1.02;
@@ -248,12 +253,12 @@
   letter-spacing: -0.03em;
 }
 
-@utility text-lead {
+@utility type-lead {
   font-size: clamp(18px, 1.5vw, 22px);
   line-height: 1.45;
 }
 
-@utility text-chip {
+@utility type-chip {
   font-size: 12px;
   line-height: 1;
   font-weight: 600;
@@ -291,6 +296,20 @@
 
 .anim-fade {
   animation: fade-in 1200ms var(--ease-arch) both;
+}
+
+/* Scroll reveal (components/motion/reveal.tsx): only armed once JS runs, so no-JS shows content. */
+[data-reveal="armed"] .reveal-item {
+  opacity: 0;
+  transform: translateY(34px);
+}
+[data-reveal="shown"] .reveal-item {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 900ms var(--ease-arch),
+    transform 900ms var(--ease-arch);
+  transition-delay: calc(var(--i, 0) * 100ms);
 }
 
 @media (prefers-reduced-motion: reduce) {

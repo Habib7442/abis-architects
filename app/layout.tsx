@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Instrument_Serif, Manrope } from "next/font/google";
 import "./globals.css";
+import { SiteHeader } from "@/components/site/header";
 import { ScrollProgress } from "@/components/site/scroll-progress";
 import { cn } from "@/lib/utils";
 
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f7f7f5",
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -44,6 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       {/* Browser extensions inject attributes on <body> before hydration; ignore those attribute diffs only. */}
       <body className="min-h-svh" suppressHydrationWarning>
         <ScrollProgress />
+        <SiteHeader />
         {children}
       </body>
     </html>

@@ -79,8 +79,8 @@ Flow: `PLAN → REVIEW → APPROVE → IMPLEMENT → TEST → FIX → SHIP`
 - **shadcn/ui (`base-nova` style, Base UI) is installed but its defaults don't match the design.** Restyle it to DESIGN.md tokens: 2px radius, hairline borders instead of shadows, cool neutral surfaces. Never ship shadcn's default look.
 
 Non-negotiable design rules (full detail in DESIGN.md):
-- **Surfaces:** light-first; paper `#F7F7F5` and concrete `#E3E4E1`. Ink `#0C0D0D` for dark bands only. **No cream, beige or ivory backgrounds, ever.**
-- **Gold:** `#CFA548` is an accent under ~5% of any screen, with **one gold button per viewport**. On light surfaces, gold *text* must be `--gold-text #745812` (plain gold fails contrast).
+- **Surfaces:** light-first and cool; paper `#FFFFFF` and concrete `#F3F5F7`, dividers `#E3E7EB`. Ink `#0C0D0D` for dark bands only. **No cream, beige, ivory or warm-grey backgrounds, ever.**
+- **Gold:** `#CFA548` is used **only** for the logo, rating stars, the scroll progress bar and small accents on dark sections. On light surfaces, accents (links, chips, icons, stat suffixes) and primary buttons are **ink**. Never gold or brown text on light.
 - **Section rhythm:** never two dark sections back to back; never more than 3 light sections without a surface change.
 - **Type:**
   - Archivo 500 with tight tracking for headings, and Instrument Serif italic for **at most one accent phrase per headline**.
@@ -177,10 +177,11 @@ Build to these unless the user changes them.
 - **Never publish placeholder pricing, specs, ratings, testimonials, awards or logos.**
   - During development, placeholder content must be visibly marked (e.g. `[PLACEHOLDER]` or a dashed outline) and come from CMS or fixtures, never hard-coded in components.
   - Anything waiting on ABIS (PRD.md §12) stays a placeholder until the real content arrives.
-- Publish only verifiable numbers. Seed stats: 500+ projects, 4.8★ (161 reviews), 7 cities, founded 2014. **Years in business is computed from 2014; don't hard-code "13+"** (it's 12 as of Nov 2026, so confirm the wording with ABIS).
+- Publish only verifiable numbers. Seed stats: 500+ projects, 4.8★ (161 reviews), 7 cities, founded 2014. **Years of experience is a fixed "13+"** (`site.yearsExperience`, by the user's decision; it exceeds the 12 years since founding, so it's marked `TODO(content)` to confirm with ABIS).
+- **No em dashes (—) or en dashes (–) in any visible copy** (pages, metadata, alt text, buttons). The client reads them as a sign of AI-written text. Rewrite with a full stop, comma or colon.
 - **Prices and timelines are always ranges + "approx"**, with "exact quote after a site visit". The estimator always shows an "indicative estimate" disclaimer.
 - Packages: **Essential · Signature · Luxe** (working names) plus a **Design-only** plan.
-- Credentials such as IIT Bombay / NIT are **not stated** until ABIS confirms the wording.
+- Credentials are confirmed by ABIS's Company Profile 2026 deck and live in `lib/site.ts`: alumni of NIT Trichy and IIT Bombay; architect licences CA/2015/66899 and CA/2019/107263 (not yet known which belongs to whom, so always shown together); registered with the Council of Architecture and GMDA. Headline figures from the same deck: 13+ years, 500+ designs delivered, 150+ projects built. Don't state credentials or figures beyond these.
 
 **Home page**
 - **Hero:** follows DESIGN.md §7.11. It is light, with "We design and build homes" + a rotating serif-italic phrase (*that last · families love · built for the Northeast*).
@@ -286,7 +287,7 @@ Enable Row Level Security on every table. The public site writes only through se
 - `next dev` rewrites the Next.js block at the top of this file. Keep it, and commit it.
 - **Tailwind v4:** tokens go in `@theme` inside `app/globals.css`. In v4, DESIGN.md §14.2's `--radius-DEFAULT` doesn't do what it would in v3, so set the shadcn `--radius` variable to `2px` instead. Map fonts to the CSS variables `next/font` generates, not to literal family names.
 - shadcn components arrive with rounded corners, shadows and `oklch` neutral colours. Restyle them.
-- **Gold text on light surfaces fails contrast.** Use `--gold-text`.
+- **Gold on light surfaces fails contrast** (2.3:1 on white), so it's never used for text or focus rings there. Use ink; focus rings are ink on light and gold on dark (`--focus`).
 - Animating `width`, `height`, `top` or `filter` hurts INP and CLS. Use transforms.
 - Lenis and GSAP must not run on touch devices or under reduced motion.
 - Katha and bigha differ by region. Take the conversion from `estimatorConfig`; don't hard-code it.

@@ -1,8 +1,10 @@
 # DESIGN.md — The ABIS Architects Website
 
-Design system & UI guidelines · **v1.1** · 21 Nov 2026
+Design system & UI guidelines · **v1.2** · 21 Nov 2026
 Companion to `PRD.md` · Build rules for Claude Code live in `CLAUDE.md`
 
+> **v1.2 changes:** cooler, cleaner palette. Paper is now pure white, concrete is a cool blue-grey, slate is cooler, and dividers are a solid `#E3E7EB`. The brown `--gold-text` is removed: accents on light surfaces are ink. Gold is kept only for the logo, rating stars, the scroll progress bar and small accents on dark sections. Primary buttons on light surfaces are ink.
+>
 > **v1.1 changes:** visual direction locked to the Pentaclay-style reference (calm, airy, real photography, serif-italic accents). The hero is now **light**, with a rotating word. Headings switch from heavy/wide to medium-weight, tight tracking. New components added: §7.11–7.18.
 
 ---
@@ -70,45 +72,45 @@ The site is **mostly light**. Dark is used on purpose, only where drama helps.
 
 | Token | Hex | Use |
 |---|---|---|
-| `--paper` | `#F7F7F5` | Main light background |
-| `--concrete` | `#E3E4E1` | Alternate light sections, cards on white |
-| `--concrete-2` | `#CFD1CD` | Borders on concrete, dividers, disabled |
-| `--line` | `#0C0D0D` @ 12% | Hairlines and grid lines on light |
+| `--paper` | `#FFFFFF` | Main light background |
+| `--concrete` | `#F3F5F7` | Alternate light sections (cool grey, slight blue tint), cards on white |
+| `--concrete-2` | `#E3E7EB` | Borders, dividers, disabled |
+| `--concrete-tint` | `#E9EDF1` | Testimonial card surface |
+| `--line` | `#E3E7EB` | Hairlines and grid lines on light |
 | `--ink` | `#0C0D0D` | Headings, body on light, dark section background |
 | `--ink-2` | `#141616` | Raised dark surfaces |
 | `--ink-3` | `#1D2020` | Cards on dark |
-| `--slate` | `#5E6461` | Secondary text on light |
-| `--mist` | `#A3A8A4` | Secondary text on dark |
-| `--gold` | `#CFA548` | Brand accent: buttons, icons, lines, numbers on **dark** |
-| `--gold-text` | `#745812` | Gold **text** on light surfaces (eyebrows, links) |
-| `--gold-tint` | `#CFA548` @ 12% | Selected states, badges on light |
+| `--slate` | `#5B6670` | Secondary text on light |
+| `--mist` | `#A0A9B2` | Secondary text on dark |
+| `--ink-muted` | `#0C0D0D` @ 45% | Secondary marks on light, e.g. the `+` in stats (45% keeps 3:1 on concrete) |
+| `--gold` | `#CFA548` | Logo, rating stars, scroll progress bar, accents on **dark** sections |
+| `--gold-tint` | `#CFA548` @ 12% | Selected states on dark |
 | `--success` | `#2F7D4F` | Form success, "Completed" badge |
 | `--warning` | `#B4561E` | "Ongoing" badge, warnings |
 | `--error` | `#B3261E` | Form errors |
 | `--whatsapp` | `#25D366` | WhatsApp buttons only |
 
-**Banned:** cream, beige, ivory or off-yellow backgrounds. Light surfaces are always **cool neutral** (paper/concrete).
+**Banned:** cream, beige, ivory or off-yellow backgrounds, and brown or gold text on light surfaces. Light surfaces are always **cool neutral** (white paper / cool-grey concrete).
 
 ### 3.2 Gold usage rules
-- Gold is an **accent, not a theme**. Keep it under ~5% of any screen.
-- On light backgrounds, **never use `--gold` for text** (contrast is only 2.1:1). Use `--gold-text`.
-- `--gold` fills (buttons, badges, icon strokes, rules) are fine on both light and dark.
-- Only **one gold button per viewport**, the primary action.
+- Gold is used **only** for: the logo, rating stars, the scroll progress bar, and small accents on **dark** sections (eyebrows, numbers, the gold button, focus rings).
+- On light surfaces, accents are **ink**: links, chips, icons, stat suffixes, section numbers.
+- **Never use gold for text on light surfaces** (2.3:1 on white).
+- Primary buttons on light surfaces are **ink**. The gold button is for dark sections only, one per viewport.
 
 ### 3.3 Verified contrast (WCAG 2.1)
 
 | Foreground / Background | Ratio | Pass |
 |---|---|---|
-| Ink on Paper | 18.1 : 1 | AAA |
-| Ink on Concrete | 15.3 : 1 | AAA |
-| Slate on Paper | 5.6 : 1 | AA |
-| Slate on Concrete | 4.7 : 1 | AA |
-| Gold-text on Paper | 6.2 : 1 | AA |
-| Gold-text on Concrete | 5.2 : 1 | AA |
+| Ink on Paper | 19.5 : 1 | AAA |
+| Ink on Concrete | 17.8 : 1 | AAA |
+| Slate on Paper | 5.9 : 1 | AA |
+| Slate on Concrete | 5.4 : 1 | AA |
+| Ink-muted (45%) on Concrete | 3.1 : 1 | AA large text only |
 | Gold on Ink | 8.5 : 1 | AAA |
 | Ink on Gold (button) | 8.5 : 1 | AAA |
-| Mist on Ink | 8.1 : 1 | AAA |
-| Gold on Paper | 2.1 : 1 | ❌ decorative only |
+| Mist on Ink | 8.2 : 1 | AAA |
+| Gold on Paper | 2.3 : 1 | ❌ decorative only (stars, progress bar) |
 
 ---
 
@@ -186,7 +188,7 @@ The recurring visual signature. Use it lightly.
 | **Grid lines** | 88px square grid, 1px `--line`, radial mask fading out. Hero and calculator background only |
 | **Dimension labels** | Vertical or horizontal micro-text with tick marks, e.g. `ELEVATION · 3D DESIGN` or `← 30' 0" →`. 11px Archivo, `+0.16em`, slate/mist |
 | **Offset frame** | Gold 1px outline offset 18px behind feature images |
-| **Section numbers** | `01 —` `02 —` in gold-text, Archivo 700 |
+| **Section numbers** | `01 —` `02 —` in ink (gold on dark), Archivo 700 |
 | **Draw-in lines** | Thin rules that animate from 0 → 100% width when a section enters |
 | **Plan outlines** | Simplified SVG floor-plan strokes as decoration in empty states, the 404 page and the calculator result |
 
@@ -200,14 +202,14 @@ Don't stack more than 2 motifs in one section.
 
 | Variant | Light bg | Dark bg | Use |
 |---|---|---|---|
-| **Primary** | Gold fill, ink text | Gold fill, ink text | Main CTA (Get estimate, Book) |
+| **Primary** | Ink fill, white text (pill) | Gold fill, ink text | Main CTA (Get estimate, Book) |
 | **Secondary** | 1px ink border, ink text | 1px white/28% border, white text | See projects, Read more |
 | **Dark** | Ink fill, paper text | n/a | CTAs on gold surfaces |
 | **WhatsApp** | `#25D366` fill, white text + icon | same | WhatsApp actions only |
-| **Text link** | gold-text + arrow → | gold + arrow → | Inline actions |
+| **Text link** | ink + arrow → | gold + arrow → | Inline actions |
 
 Specs: height 52px (desktop) / 48px (mobile), padding `0 26px`, 14px Manrope 700, letter-spacing `0.02em`, radius 2px.
-Hover: lift `translateY(-2px)` and lighten fill 6%. Focus: 2px gold outline, 3px offset. Arrows nudge 4px right on hover.
+Hover: lift `translateY(-2px)` and lighten fill 6%. Focus: 2px outline, 3px offset (ink on light, gold on dark). Arrows nudge 4px right on hover.
 
 ### 7.2 Header
 - Height 78px. Transparent over the light hero (ink text, **ink logo**); on dark-hero pages, white text and the gold logo.
@@ -231,7 +233,7 @@ Sticky bottom bar on all pages under 768px:
 |---|---|
 | Completed | success text on success-tint pill |
 | Ongoing | warning text on warning-tint pill + pulsing dot |
-| 3D Design | gold-text on gold-tint pill |
+| 3D Design | ink on concrete pill |
 
 ### 7.6 Forms
 - Labels: 12px uppercase, `+0.1em`, slate, always visible (no placeholder-only labels).
@@ -254,13 +256,13 @@ Sticky bottom bar on all pages under 768px:
 - Supports drag, keyboard arrows and tap-to-jump. It starts at 50% and auto-nudges 40% → 60% once on entering view to show it's interactive.
 
 ### 7.9 Stats strip
-4 columns on desktop, 2×2 on mobile, separated by hairlines. Numbers in `stat` size and ink; the suffix (`+`, `K+`) in gold-text. Count up once on view (1.6s ease-out). In HTML the **final number is rendered by default**, so the animation is only an enhancement.
+4 columns on desktop, 2×2 on mobile, separated by hairlines. Numbers in `stat` size and ink; the suffix (`+`, `K+`) in `--ink-muted`; the rating star in gold. Count up once on view (1.6s ease-out). In HTML the **final number is rendered by default**, so the animation is only an enhancement.
 
 ### 7.10 Process timeline
 Horizontal on desktop (connected by a hairline through 56px ink circles with gold numbers); vertical on mobile (circle left, text right). The active step on `/how-it-works` gets a gold-filled circle.
 
 ### 7.11 Hero with rotating word *(Pentaclay)*
-- Full-bleed, min-height `100svh`. Background: a sky gradient at the top (`#CFE0EE → #F7F7F5`) fading into paper, with a **daylight ABIS project photo anchored to the bottom** (cut out or cropped so the sky blends into the gradient).
+- Full-bleed, min-height `100svh`. Background: white paper at the top fading into the photo's own sky colour (`--hero-sky`), with a **daylight ABIS project photo anchored to the bottom** (cut out or cropped so the sky blends into the gradient).
 - Centred H1 in `display`: **"We design and build homes"** + rotating serif-italic phrase on the next line: *that last · families love · built for the Northeast*.
 - Rotation: the current word slides up and fades out while the next slides in from below. Ghost copies of the previous and next words sit above and below at 20% opacity (as in the reference). Interval 2.6s; pauses on hover; static (first word) under reduced motion.
 - Below the H1: one line of `lead` copy + two buttons (Primary "Get free estimate", Secondary "See our projects").
@@ -280,7 +282,7 @@ Replaces the reference's fake "trusted by" logos. A single row, slate monochrome
 Caption above: "Recognised by" or "Built with trusted brands". Never invent logos.
 
 ### 7.14 About + stats with explanations *(Pentaclay)*
-- Left: a 4:5 project image. Right: chip "About us", then a `lead` paragraph (ABIS's story in 2–3 sentences), then a secondary button.
+- Left: a 3:4 founder photo with a small white name card overlapping its bottom-left corner; the text column is top-aligned with the photo. Right: chip "About us", then a `lead` paragraph (ABIS's story in 2–3 sentences), then a secondary button.
 - Below, 4 stat columns: big number (`stat`), a hairline, a bold label (`h3`-small), then 2 lines of `small` slate text explaining it.
 - Seed: **13+** years · **500+** projects · **7** cities · **4.8★** Google rating.
 
@@ -301,7 +303,7 @@ Caption above: "Recognised by" or "Built with trusted brands". Never invent logo
 - Tabs: keyboard accessible (`role="tablist"`).
 
 ### 7.18 Testimonial + brand card *(Pentaclay)*
-- A two-card row: a large testimonial card (concrete-tint surface: `#DADDD6`) with the quote in `lead`, avatar, name, home type and city; and a smaller ink card with the ABIS monogram in gold + "Read all reviews on Google →".
+- A two-card row: a large testimonial card (concrete-tint surface: `#E9EDF1`) with the quote in `lead`, avatar, name, home type and city; and a smaller ink card with the ABIS monogram in gold + "Read all reviews on Google →".
 - Carousel of real testimonials (arrows + swipe), maximum 6.
 
 ### 7.19 Footer with giant wordmark *(Rylic)*
@@ -310,7 +312,7 @@ Caption above: "Recognised by" or "Built with trusted brands". Never invent logo
 - Final row: © line, legal links, "Designed & built by Locallify".
 
 ### 7.20 Label chips *(Pentaclay)*
-Used instead of eyebrows **on light sections**: a small pill (`chip` text, 6px 10px padding, concrete fill, 1px concrete-2 border, 2px radius) with a 12px line icon, e.g. `⌂ ABOUT US`, `▦ OUR PROJECTS`. On dark sections keep the gold eyebrow with a rule.
+Used instead of eyebrows **on light sections**: a small pill (`chip` text, 6px 12px padding, white fill, 1px `--line` border, fully rounded) with a 12px ink line icon, e.g. `⌂ ABOUT US`, `▦ OUR PROJECTS`. On dark sections keep the gold eyebrow with a rule.
 
 ---
 
@@ -373,6 +375,7 @@ Hero render 4:5 · Project card 4:5 · Wide feature 16:9 · Gallery 3:2 · Detai
 - Short sentences. Talk to "you"; refer to the firm as "we".
 - Prices and timelines are always ranges + "approx", with an exact quote after a site visit.
 - Example CTAs: *Get free estimate* · *Book a site visit* · *Chat on WhatsApp* · *Build something like this* · *See how we build*
+- **No em dashes (—) or en dashes (–) in any site copy.** They read as AI-written. Use a full stop, comma or colon instead.
 - Avoid: "world-class", "best in class", "cutting-edge", "synergy", unverified "#1" claims.
 
 ---
@@ -380,7 +383,7 @@ Hero render 4:5 · Project card 4:5 · Wide feature 16:9 · Gallery 3:2 · Detai
 ## 12. Accessibility
 - WCAG 2.1 **AA** minimum (palette verified in §3.3).
 - Tap targets ≥ 44×44px; spacing between adjacent targets ≥ 8px.
-- Visible focus ring on every interactive element (2px gold, 3px offset; ink on gold surfaces).
+- Visible focus ring on every interactive element (2px, 3px offset): ink on light surfaces, gold on dark (gold fails 3:1 on white).
 - The slider, filters and calculator chips are fully keyboard operable with ARIA roles/labels.
 - Form errors are announced (`aria-live="polite"`) and tied to inputs (`aria-describedby`).
 - Language attribute switches to `bn` on Bengali pages.
@@ -398,8 +401,9 @@ Hero render 4:5 · Project card 4:5 · Wide feature 16:9 · Gallery 3:2 · Detai
 
 - Minimum width: 96px (full lockup) / 28px (mark).
 - Clear space = height of the dot on the "i" on all sides.
-- Never place the gold logo on concrete/paper, never add effects, and never recolour it to anything other than gold or ink.
-- **Needed from client:** vector (SVG/AI) master files of the logo.
+- **In use (client decision, 26 Nov 2026):** the gold 3D "abis / THE ABIS CONSTRUCTION" lockup is used on every surface, light and dark (`public/brand/abis-logo.webp`, black background removed). **In the header** the logo's own wordmark is too small to read (≈7px), so the header shows the gold monogram (`abis-mark.webp`, 40px tall) with "THE ABIS / CONSTRUCTION" set as live Archivo text in ink beside it. Use the full raster lockup only at 120px tall or more (footer, OG image, PDFs). The monogram alone (`public/brand/abis-mark.webp`) is the favicon and app icon, on ink.
+- Never add effects or recolour it.
+- **Still needed from client:** vector (SVG/AI) master files. The current logo is a raster render, so it can't be recoloured to an ink version and loses sharpness when enlarged.
 
 ---
 
@@ -408,17 +412,17 @@ Hero render 4:5 · Project card 4:5 · Wide feature 16:9 · Gallery 3:2 · Detai
 ### 14.1 CSS variables
 ```css
 :root {
-  --paper:#F7F7F5; --concrete:#E3E4E1; --concrete-2:#CFD1CD;
-  --ink:#0C0D0D; --ink-2:#141616; --ink-3:#1D2020;
-  --slate:#5E6461; --mist:#A3A8A4;
-  --gold:#CFA548; --gold-text:#745812; --gold-tint:rgba(207,165,72,.12);
-  --line:rgba(12,13,13,.12); --line-dark:rgba(255,255,255,.10);
+  --paper:#FFFFFF; --concrete:#F3F5F7; --concrete-2:#E3E7EB;
+  --ink:#0C0D0D; --ink-2:#141616; --ink-3:#1D2020; --ink-muted:rgba(12,13,13,.45);
+  --slate:#5B6670; --mist:#A0A9B2;
+  --gold:#CFA548; --gold-tint:rgba(207,165,72,.12);
+  --line:#E3E7EB; --line-dark:rgba(255,255,255,.10);
   --success:#2F7D4F; --warning:#B4561E; --error:#B3261E; --whatsapp:#25D366;
 
   --font-display:'Archivo',system-ui,sans-serif;
   --font-serif:'Instrument Serif',Georgia,serif;
   --font-body:'Manrope',system-ui,sans-serif;
-  --sky:#CFE0EE; --concrete-tint:#DADDD6;
+  --sky:#CFE0EE; --concrete-tint:#E9EDF1;
   --font-bn:'Hind Siliguri','Manrope',sans-serif;
 
   --radius:2px;
@@ -433,12 +437,12 @@ Hero render 4:5 · Project card 4:5 · Wide feature 16:9 · Gallery 3:2 · Detai
 ### 14.2 Tailwind (v4 `@theme`)
 ```css
 @theme {
-  --color-paper:#F7F7F5;  --color-concrete:#E3E4E1; --color-concrete-2:#CFD1CD;
+  --color-paper:#FFFFFF;  --color-concrete:#F3F5F7; --color-concrete-2:#E3E7EB;
   --color-ink:#0C0D0D;    --color-ink-2:#141616;    --color-ink-3:#1D2020;
-  --color-slate:#5E6461;  --color-mist:#A3A8A4;
-  --color-gold:#CFA548;   --color-gold-text:#745812;
+  --color-slate:#5B6670;  --color-mist:#A0A9B2;
+  --color-gold:#CFA548;   --color-ink-muted:rgba(12,13,13,.45);
   --color-success:#2F7D4F; --color-warning:#B4561E; --color-error:#B3261E;
-  --color-sky:#CFE0EE; --color-concrete-tint:#DADDD6;
+  --color-sky:#CFE0EE; --color-concrete-tint:#E9EDF1;
   --font-display:'Archivo',sans-serif; --font-serif:'Instrument Serif',serif; --font-sans:'Manrope',sans-serif;
   --radius-DEFAULT:2px;
   --ease-arch:cubic-bezier(.2,.7,.2,1);
@@ -460,11 +464,11 @@ Each `Section` sets `data-theme`, so child components (buttons, eyebrows, cards,
 | ✅ Do | ❌ Don't |
 |---|---|
 | Keep light surfaces cool grey/white | Use cream, beige or yellowed backgrounds |
-| Use gold as a thin accent | Make whole sections gold-on-gold or use gold body text on light |
+| Use ink for accents on light; gold only for logo, stars, progress bar and dark sections | Use gold or brown text on light surfaces, or gold buttons on light |
 | Show real projects with real numbers | Use stock families or fake testimonials |
 | Use 2px corners and hairlines | Use rounded-2xl cards with heavy drop shadows |
 | Write the way a site engineer explains to a family | Use architect jargon in headlines |
-| Put one clear primary CTA per view | Put three gold buttons side by side |
+| Put one clear primary CTA per view | Put several primary buttons side by side |
 | Use the dusk render in dark sections | Put text over busy daylight construction photos |
 | Use serif italics for one accent phrase | Mix serif italics into body text or buttons |
 | Keep body text ≥ 16px on mobile | Copy the reference's tiny body text |
