@@ -67,7 +67,10 @@ export function Hero() {
               alt=""
               fill
               sizes={HERO_SIZES}
+              // Lazy, so light mode (display:none) never fetches it; high priority, because in
+              // dark mode it is the LCP (Next docs: theme images use fetchPriority, not eager).
               loading="lazy"
+              fetchPriority="high"
               className="object-cover object-[50%_100%]"
             />
           </div>

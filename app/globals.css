@@ -423,6 +423,27 @@
   transition-delay: calc(var(--i, 0) * 100ms);
 }
 
+/* Design vs Reality pairs: the design fades in, then the built image slides in from the right. */
+[data-reveal="armed"] .reveal-fade {
+  opacity: 0;
+}
+[data-reveal="armed"] .reveal-from-right {
+  opacity: 0;
+  transform: translateX(48px);
+}
+[data-reveal="shown"] .reveal-fade {
+  opacity: 1;
+  transition: opacity 600ms var(--ease-arch);
+}
+[data-reveal="shown"] .reveal-from-right {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 600ms var(--ease-arch),
+    transform 600ms var(--ease-arch);
+  transition-delay: 350ms;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .anim-rise,
   .anim-fade {
