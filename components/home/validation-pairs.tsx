@@ -73,7 +73,8 @@ export function ValidationPairs({ pairs, designLabel }: { pairs: readonly Pair[]
 
   return (
     <>
-      <ul className="mt-12 space-y-20 lg:mt-16">
+      {/* overflow-x-clip: the built image waits 48px to the right before sliding in; never let it widen the page. */}
+      <ul className="mt-12 space-y-20 overflow-x-clip lg:mt-16">
         {pairs.map((p, i) => (
           <li key={p.name}>
             <Reveal>

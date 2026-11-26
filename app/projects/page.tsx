@@ -6,11 +6,10 @@ import { Reveal } from "@/components/motion/reveal";
 import { FeaturedCard } from "@/components/projects/featured-card";
 import { MasonryGallery } from "@/components/projects/masonry-gallery";
 import { CurrentlyBuilding } from "@/components/sections/currently-building";
-import { CtaBand } from "@/components/site/cta-band";
 import { Chip } from "@/components/ui/chip";
 import { projectsPage as c } from "@/lib/content/projects-page";
 import { flagshipImages, flagships, galleryCategories, galleryImages, galleryStatuses } from "@/lib/projects";
-import { estimateHref, site } from "@/lib/site";
+import { site } from "@/lib/site";
 
 const cover = flagshipImages(flagships[0])[0];
 
@@ -146,16 +145,7 @@ export default function ProjectsPage() {
       </section>
       <Gallery />
       <DesignVsReality showViewAll={false} />
-      <CtaBand
-        id="projects-cta-title"
-        className="bg-paper"
-        titleLead={c.cta.titleLead}
-        titleAccent={c.cta.titleAccent}
-        text={c.cta.text}
-        estimateLabel={c.cta.estimate}
-        estimateHref={estimateHref}
-        whatsappLabel={c.cta.whatsapp}
-      />
+      {/* Closing CTA: the site-wide band in the layout. */}
     </main>
   );
 }

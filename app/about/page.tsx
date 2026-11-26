@@ -4,14 +4,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import { ArrowRight, ArrowUpRight, BadgeCheck, Compass, House, MessageCircle, ShieldCheck, Target } from "lucide-react";
+import { ArrowUpRight, BadgeCheck, Compass, House, ShieldCheck, Target } from "lucide-react";
 import { Reveal } from "@/components/motion/reveal";
 import { FoundersPair } from "@/components/site/founder-portrait";
 import { StatsRow } from "@/components/site/stats-row";
-import { buttonVariants } from "@/components/ui/button";
 import { Chip, Eyebrow } from "@/components/ui/chip";
 import { about } from "@/lib/content/about";
-import { estimateHref, site } from "@/lib/site";
+import { estimateHref } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -257,38 +256,6 @@ function AboutMission() {
   );
 }
 
-/* ------------------------------------------------------------------ 5. CTA (concrete) */
-function AboutCta() {
-  const { cta } = about;
-  return (
-    <section aria-labelledby="about-cta-title" className="bg-concrete py-20 lg:py-28">
-      <Reveal className={cn(container, "flex flex-col items-center text-center")}>
-        <h2 id="about-cta-title" className={cn(h2, "reveal-item text-ink")} style={item(0)}>
-          {cta.titleLead} <em className={cn(accent, "whitespace-nowrap")}>{cta.titleAccent}</em>
-        </h2>
-        <p className="reveal-item mt-5 max-w-[48ch] text-balance text-[17px] leading-[1.6] text-slate" style={item(1)}>
-          {cta.text}
-        </p>
-        <div className="reveal-item mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row" style={item(2)}>
-          <Link href={estimateHref} className={cn(buttonVariants({ variant: "pill-dark", size: "pill" }), "w-full sm:w-auto")}>
-            Get free estimate
-            <ArrowRight aria-hidden strokeWidth={1.5} className="transition-transform group-hover/button:translate-x-1" />
-          </Link>
-          <a
-            href={site.whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(buttonVariants({ variant: "whatsapp", size: "pill" }), "w-full rounded-full sm:w-auto")}
-          >
-            <MessageCircle aria-hidden strokeWidth={1.5} />
-            Chat on WhatsApp
-          </a>
-        </div>
-      </Reveal>
-    </section>
-  );
-}
-
 export default function AboutPage() {
   return (
     <main>
@@ -296,7 +263,7 @@ export default function AboutPage() {
       <AboutFounders />
       <AboutVision />
       <AboutMission />
-      <AboutCta />
+      {/* Closing CTA: the site-wide band in the layout (components/site/site-cta.tsx). */}
     </main>
   );
 }

@@ -23,10 +23,6 @@ export const projectsPage = {
     pageSize: 12,
   },
   cta: {
-    titleLead: "Like what you see?",
-    titleAccent: "Let's plan yours.",
-    text: "Get a free estimate in a few minutes, or message us on WhatsApp.",
-    estimate: "Get free estimate",
     whatsapp: "Chat on WhatsApp",
   },
   detail: {

@@ -22,6 +22,27 @@ export const site = {
   projectsBuilt: 150,
   cityCount: 7,
   email: "abiscollaboration@gmail.com",
+  address: {
+    street: "Sonai Road, SA Chowdhury Lane, Opposite Kia Showroom, Kanakpur",
+    city: "Silchar",
+    region: "Assam",
+    postalCode: "788006",
+    country: "IN",
+  },
+  // No en dash in copy (AGENTS §8): "to" instead.
+  hoursDisplay: "Mon to Sat, 10:00 AM to 7:00 PM",
+  hours: { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], opens: "10:00", closes: "19:00" },
+  directionsUrl: "https://www.google.com/maps/search/?api=1&query=The+ABIS+Architects+Silchar",
+  // TODO(content): exact coordinates of the office for LocalBusiness geo (omitted until known).
+  geo: null as { latitude: number; longitude: number } | null,
+  socials: {
+    instagram: "https://www.instagram.com/abis_arch",
+    facebook: "https://www.facebook.com/abisarchitects",
+    linkedin: "https://www.linkedin.com/company/theabisarchitects",
+  },
+  legalName: "The ABIS Architects & The ABIS Construction",
+  // TODO(content): confirm the typical response time with ABIS.
+  responseTime: "within one working day",
   // Company Profile 2026 deck (slide 2).
   credentials: "Alumni of NIT Trichy and IIT Bombay",
   // Which licence belongs to which founder is not confirmed, so always show them together.
@@ -41,7 +62,7 @@ export const site = {
     // Studio cut-out (transparent background), from bd.png.
     photo: "/team/co-founder.webp",
   },
-} as const;
+};
 
 export type Person = { name: string; role: string; photo: string };
 

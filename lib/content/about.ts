@@ -82,9 +82,4 @@ export const about = {
     ],
   },
 
-  cta: {
-    titleLead: "Have a plot?",
-    titleAccent: "Let's talk.",
-    text: "Get a free estimate in a few minutes, or message us on WhatsApp.",
-  },
 } as const;

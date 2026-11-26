@@ -1,7 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Instrument_Serif, Manrope } from "next/font/google";
 import "./globals.css";
+import { SiteFooter } from "@/components/site/footer";
 import { SiteHeader } from "@/components/site/header";
+import { LocalBusinessJsonLd } from "@/components/site/local-business-jsonld";
+import { SiteCta } from "@/components/site/site-cta";
 import { ScrollProgress } from "@/components/site/scroll-progress";
 import { ThemeSync } from "@/components/site/theme-toggle";
 import { InlineScript } from "@/components/site/inline-script";
@@ -60,6 +63,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <ScrollProgress />
         <SiteHeader />
         {children}
+        <SiteCta />
+        <SiteFooter />
+        <LocalBusinessJsonLd />
       </body>
     </html>
   );

@@ -423,6 +423,19 @@
   transition-delay: calc(var(--i, 0) * 100ms);
 }
 
+/* Footer wordmark: rises a little as it scrolls into view. */
+[data-reveal="armed"] .wordmark-rise {
+  transform: translateY(18%);
+  opacity: 0.4;
+}
+[data-reveal="shown"] .wordmark-rise {
+  transform: none;
+  opacity: 1;
+  transition:
+    transform 1600ms var(--ease-arch),
+    opacity 1600ms var(--ease-arch);
+}
+
 /* Design vs Reality pairs: the design fades in, then the built image slides in from the right. */
 [data-reveal="armed"] .reveal-fade {
   opacity: 0;
