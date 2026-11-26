@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Dialog } from "@base-ui/react/dialog";
 import { Menu, MessageCircle, Phone, X } from "lucide-react";
 import { Logo } from "@/components/site/logo";
+import { ThemeSwitchRow, ThemeToggle } from "@/components/site/theme-toggle";
 import { buttonVariants } from "@/components/ui/button";
 import { mainNav, site } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -27,7 +28,7 @@ export function SiteHeader() {
       data-scrolled={scrolled || undefined}
       className={cn(
         "fixed inset-x-0 top-0 z-50 h-(--header-h) border-b border-transparent transition-[background-color,border-color,backdrop-filter] duration-300 ease-arch",
-        "data-scrolled:border-line data-scrolled:bg-white/85 data-scrolled:backdrop-blur-[14px]",
+        "data-scrolled:border-line data-scrolled:bg-paper/85 data-scrolled:backdrop-blur-[14px]",
       )}
     >
       <div className="mx-auto grid h-full max-w-[1320px] grid-cols-[1fr_auto] items-center gap-6 px-(--pad) lg:grid-cols-[1fr_auto_1fr]">
@@ -49,6 +50,8 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center justify-end gap-2">
+          {/* Desktop: left of "Get in touch". Mobile: next to the menu button. */}
+          <ThemeToggle />
           <Link
             href="/contact"
             className={cn(buttonVariants({ variant: "pill", size: "sm" }), "hidden lg:inline-flex")}
@@ -108,6 +111,7 @@ export function SiteHeader() {
                       </Link>
                     </li>
                   </ul>
+                  <ThemeSwitchRow className="border-b border-line" />
                 </nav>
 
                 <div className="grid shrink-0 grid-cols-2 gap-3 border-t border-line px-(--pad) pt-4 pb-[max(1rem,env(safe-area-inset-bottom))]">

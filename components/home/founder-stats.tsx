@@ -14,12 +14,12 @@ export function FounderStats() {
   return (
     <section aria-labelledby="about-title" className="bg-concrete pt-16 pb-16 lg:pt-24 lg:pb-24">
       <Reveal className="mx-auto max-w-[1320px] px-(--pad)">
-        {/* Desktop: the text column stretches to the photo's height; intro sits at the top,
-            trust points + link at the bottom, so there's no empty gap under the text. */}
-        <div className="grid gap-14 lg:grid-cols-12 lg:items-stretch lg:gap-16">
+        {/* Desktop: the text block is top-aligned with the photo and flows naturally:
+            checklist 32px under the paragraph, "Our story" 24px under the checklist. */}
+        <div className="grid gap-14 lg:grid-cols-12 lg:items-start lg:gap-16">
           <FounderPortrait className="reveal-item lg:col-span-5" style={item(0)} />
 
-          <div className="flex flex-col gap-10 lg:col-span-7 lg:justify-between lg:gap-12">
+          <div className="flex flex-col gap-8 lg:col-span-7">
             <div>
               <Chip as="h2" id="about-title" icon={<House aria-hidden strokeWidth={1.5} />} className="reveal-item" style={item(1)}>
                 {about.chip}

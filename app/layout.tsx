@@ -3,6 +3,8 @@ import { Archivo, Instrument_Serif, Manrope } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site/header";
 import { ScrollProgress } from "@/components/site/scroll-progress";
+import { ThemeSync } from "@/components/site/theme-toggle";
+import { themeInitScript } from "@/lib/theme-script";
 import { cn } from "@/lib/utils";
 
 const archivo = Archivo({
@@ -33,7 +35,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  // Follows the system; the in-page toggle only changes the page itself.
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0c0d0d" },
+  ],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -41,9 +47,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       className={cn("antialiased", archivo.variable, instrumentSerif.variable, manrope.variable)}
+      // The <head> script sets data-mode before React hydrates.
+      suppressHydrationWarning
     >
+      <head>
+        {/* Sets <html data-mode> before first paint: saved choice, else the system (no flash). */}
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       {/* Browser extensions inject attributes on <body> before hydration; ignore those attribute diffs only. */}
       <body className="min-h-svh" suppressHydrationWarning>
+        <ThemeSync />
         <ScrollProgress />
         <SiteHeader />
         {children}

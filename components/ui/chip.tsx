@@ -19,7 +19,7 @@ export function Chip<T extends ElementType = "p">({
   return (
     <Tag
       className={cn(
-        "inline-flex items-center gap-2 rounded-full border border-line bg-white px-3 py-1.5 type-chip text-ink [&_svg]:size-3.5",
+        "inline-flex items-center gap-2 rounded-full border border-line bg-card px-3 py-1.5 type-chip text-ink [&_svg]:size-3.5",
         className,
       )}
       {...props}

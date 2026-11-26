@@ -52,7 +52,7 @@
   --popover: #ffffff;
   --popover-foreground: var(--ink);
   --primary: var(--ink);
-  --primary-foreground: #ffffff;
+  --primary-foreground: var(--paper);
   --secondary: var(--concrete);
   --secondary-foreground: var(--ink);
   --muted: var(--concrete);
@@ -65,6 +65,111 @@
   --ring: var(--ink);
   --focus: var(--ink);
 }
+
+/* ------------------------------------------------------------------
+   Page mode (prompts/003): <html data-mode="light|dark">, set before paint by
+   lib/theme-script.ts. Dark mode reuses the dark-band colours (DESIGN §3); nothing new.
+   The ink scale is the foreground role, so it flips. `--ink-fixed` never flips: use it for
+   dark bands and for text on gold / WhatsApp fills.
+   ------------------------------------------------------------------ */
+:root {
+  --ink-fixed: #0c0d0d;
+  color-scheme: light;
+
+  /* Home hero (prompts/005): day photo in light mode, night render in dark mode. */
+  --hero-base: var(--paper); /* behind the photo's masked-in top */
+  --hero-heading: var(--ink);
+  --hero-accent: var(--ink);
+  --hero-lead: var(--slate);
+  /* The bottom fades into the section below it (FounderStats, concrete) in the active mode. */
+  --page-below-hero: var(--concrete);
+  --hero-fade-h: 80px;
+}
+
+:root[data-mode="dark"] {
+  color-scheme: dark;
+
+  --paper: #0c0d0d;
+  --concrete: #141616;
+  --concrete-2: #1d2020;
+  /* Portrait panel: a touch lighter so the cut-outs' pale edges don't halo. */
+  --concrete-tint: #1c2024;
+  --ink: #f5f6f4;
+  --ink-2: #e3e7eb;
+  --ink-3: #d3d9de;
+  --slate: #a0a9b2;
+  --line: rgb(255 255 255 / 0.1);
+  --ink-muted: rgb(245 246 244 / 0.5);
+  --hero-base: #0e1012;
+  --hero-heading: #ffffff;
+  --hero-accent: var(--gold); /* gold accent on a dark surface (DESIGN §3.2) */
+  --hero-lead: #9aa3ab;
+  --hero-fade-h: 120px;
+
+  --card: #1d2020;
+  --popover: #1d2020;
+  --primary-foreground: var(--paper);
+  --ring: var(--gold);
+  --focus: var(--gold);
+
+  --scrollbar-track: var(--paper);
+  --scrollbar-thumb: rgb(255 255 255 / 0.25);
+  --scrollbar-thumb-hover: var(--gold);
+}
+
+/* In dark mode a dark band sits on dark neighbours, so a hairline keeps the surface change. */
+:root[data-mode="dark"] section[data-theme="dark"] {
+  border-block: 1px solid var(--line-dark);
+}
+
+/* Colour fade, only while a click switches the mode (never on load, off under reduced motion). */
+.theme-switching,
+.theme-switching *:not(.hero-xfade),
+.theme-switching *::before,
+.theme-switching *::after {
+  transition-property: background-color, color, border-color, fill, stroke, outline-color !important;
+  transition-duration: 200ms !important;
+  transition-timing-function: var(--ease-arch) !important;
+  transition-delay: 0ms !important;
+}
+
+/* ------------------------------------------------------------------
+   Home hero day/night crossfade (prompts/005), 400ms on a theme switch only.
+   The night layer is display:none in light mode, so its lazy image is never fetched there.
+   On first load there is no transition (nothing changes), and the fade-in from 0 only runs
+   while .theme-switching is on <html>.
+   ------------------------------------------------------------------ */
+.hero-xfade {
+  transition: opacity 400ms var(--ease-arch);
+}
+.hero-night {
+  display: none;
+  opacity: 0;
+  transition:
+    opacity 400ms var(--ease-arch),
+    display 400ms allow-discrete;
+}
+:root[data-mode="dark"] .hero-night {
+  display: block;
+  opacity: 1;
+}
+:root[data-mode="dark"] .hero-day {
+  opacity: 0;
+}
+@starting-style {
+  :root.theme-switching[data-mode="dark"] .hero-night {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-xfade,
+  .hero-night {
+    transition: none;
+  }
+}
+
+/* Tailwind `dark:` follows the page mode, not the system. */
+@custom-variant dark (&:where([data-mode="dark"], [data-mode="dark"] *));
 
 [data-theme="dark"] {
   --focus: var(--gold);
@@ -82,6 +187,7 @@
   --color-ink: var(--ink);
   --color-ink-2: var(--ink-2);
   --color-ink-3: var(--ink-3);
+  --color-ink-fixed: var(--ink-fixed);
   --color-slate: var(--slate);
   --color-mist: var(--mist);
   --color-gold: var(--gold);

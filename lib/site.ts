@@ -30,6 +30,9 @@ export const site = {
     name: "Abhijit Das",
     role: "Co-founder & Architect",
     // Studio cut-out (transparent background), from ad.png. Ideally replace with a photo at a site.
+    // TODO(content): need a clean cut-out of the founder photo (no white edges), or the original
+    // photo with background. The current cut-out keeps white background patches between the arms
+    // and body and a pale fringe on the shoulders; they show on the dark-mode panel.
     photo: "/team/founder.webp",
   },
   coFounder: {

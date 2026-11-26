@@ -122,7 +122,7 @@ function AboutFounders() {
 function AboutVision() {
   const { vision } = about;
   return (
-    <section data-theme="dark" aria-labelledby="about-vision-title" className="bg-ink py-20 text-white lg:py-32">
+    <section data-theme="dark" aria-labelledby="about-vision-title" className="bg-ink-fixed py-20 text-white lg:py-32">
       <Reveal className={container}>
         <div className="grid gap-6 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-8">
@@ -174,7 +174,7 @@ function AboutVision() {
             />
             {vision.journey.map((step, i) => (
               <li key={step.year} className="reveal-item relative pl-9 lg:pt-10 lg:pl-0" style={item(7 + i)}>
-                <span aria-hidden className="absolute top-1.5 left-0 size-3 rounded-full bg-gold ring-4 ring-ink lg:top-0" />
+                <span aria-hidden className="absolute top-1.5 left-0 size-3 rounded-full bg-gold ring-4 ring-ink-fixed lg:top-0" />
                 <p className="font-display text-[clamp(32px,3vw,44px)] leading-none font-medium tracking-[-0.03em] text-gold tabular-nums">
                   {step.year}
                 </p>
@@ -233,7 +233,7 @@ function AboutMission() {
                 </div>
               </li>
             ))}
-            <li className="reveal-item bg-ink sm:col-span-2 lg:col-span-1" style={item(8)}>
+            <li className="reveal-item bg-ink-fixed sm:col-span-2 lg:col-span-1" style={item(8)}>
               <Link
                 href="/cost-calculator"
                 className="group flex h-full flex-col justify-between gap-5 p-6 text-white focus-visible:outline-gold lg:min-h-60 lg:gap-10 lg:p-7"

@@ -11,15 +11,15 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "bg-ink text-white hover:bg-ink-3",
+        primary: "bg-ink text-paper hover:bg-ink-3",
         // Gold fill: dark sections only (DESIGN §3.2)
-        gold: "bg-gold text-ink hover:bg-[color-mix(in_oklab,var(--gold),white_10%)]",
+        gold: "bg-gold text-ink-fixed hover:bg-[color-mix(in_oklab,var(--gold),white_10%)]",
         secondary: "border-ink text-ink hover:bg-ink hover:text-paper",
         "secondary-dark": "border-white/30 text-white hover:border-white",
         dark: "bg-ink text-paper hover:bg-ink-3",
-        whatsapp: "bg-whatsapp text-ink hover:bg-[color-mix(in_oklab,var(--whatsapp),white_10%)]",
-        pill: "rounded-full border-ink/15 bg-white text-ink hover:border-ink/40",
-        "pill-dark": "rounded-full bg-ink text-white hover:bg-ink-3",
+        whatsapp: "bg-whatsapp text-ink-fixed hover:bg-[color-mix(in_oklab,var(--whatsapp),white_10%)]",
+        pill: "rounded-full border-ink/15 bg-card text-ink hover:border-ink/40",
+        "pill-dark": "rounded-full bg-ink text-paper hover:bg-ink-3",
         link: "h-auto px-0 text-ink hover:translate-y-0 hover:underline underline-offset-4",
       },
       size: {
