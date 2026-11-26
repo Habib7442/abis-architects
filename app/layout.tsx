@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/site/header";
 import { ScrollProgress } from "@/components/site/scroll-progress";
 import { ThemeSync } from "@/components/site/theme-toggle";
 import { InlineScript } from "@/components/site/inline-script";
+import { siteUrl } from "@/lib/site";
 import { themeInitScript } from "@/lib/theme-script";
 import { cn } from "@/lib/utils";
 
@@ -30,6 +31,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "The ABIS Architects | Architects & Builders in Silchar",
   description:
     "Architects and builders from Silchar since 2014. One team for your plan, 3D design, construction and interiors across Assam and the Northeast.",

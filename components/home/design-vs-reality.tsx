@@ -14,7 +14,8 @@ const item = (i: number) => ({ "--i": i }) as CSSProperties;
  * Home "Design vs Reality" (prompts/009): 3D render next to the real building. Always dark
  * (`bg-night` + `data-theme="dark"`), like "Our projects".
  */
-export function DesignVsReality() {
+/** `showViewAll={false}` on /projects itself (the button would link to the same page). */
+export function DesignVsReality({ showViewAll = true }: { showViewAll?: boolean }) {
   const c = home.designVsReality;
   return (
     <section data-theme="dark" aria-labelledby="design-vs-reality-title" className="bg-night py-16 text-white lg:py-24">
@@ -45,10 +46,12 @@ export function DesignVsReality() {
             <CircleCheck aria-hidden strokeWidth={1.5} className="mt-0.5 size-5 shrink-0 text-gold sm:mt-0" />
             {c.proof}
           </p>
-          <Link href={c.viewAll.href} className={cn(buttonVariants({ variant: "pill-light", size: "pill" }), "reveal-item")} style={item(1)}>
-            {c.viewAll.label}
-            <ArrowRight aria-hidden strokeWidth={1.5} className="transition-transform group-hover/button:translate-x-1" />
-          </Link>
+          {showViewAll && (
+            <Link href={c.viewAll.href} className={cn(buttonVariants({ variant: "pill-light", size: "pill" }), "reveal-item")} style={item(1)}>
+              {c.viewAll.label}
+              <ArrowRight aria-hidden strokeWidth={1.5} className="transition-transform group-hover/button:translate-x-1" />
+            </Link>
+          )}
         </Reveal>
       </div>
     </section>

@@ -11,7 +11,7 @@ import { StatsRow } from "@/components/site/stats-row";
 import { buttonVariants } from "@/components/ui/button";
 import { Chip, Eyebrow } from "@/components/ui/chip";
 import { about } from "@/lib/content/about";
-import { site } from "@/lib/site";
+import { estimateHref, site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -237,7 +237,7 @@ function AboutMission() {
             ))}
             <li className="reveal-item bg-ink-fixed sm:col-span-2 lg:col-span-1" style={item(8)}>
               <Link
-                href="/cost-calculator"
+                href={estimateHref}
                 className="group flex h-full flex-col justify-between gap-5 p-6 text-white focus-visible:outline-gold lg:min-h-60 lg:gap-10 lg:p-7"
               >
                 <ArrowUpRight
@@ -270,7 +270,7 @@ function AboutCta() {
           {cta.text}
         </p>
         <div className="reveal-item mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row" style={item(2)}>
-          <Link href="/cost-calculator" className={cn(buttonVariants({ variant: "pill-dark", size: "pill" }), "w-full sm:w-auto")}>
+          <Link href={estimateHref} className={cn(buttonVariants({ variant: "pill-dark", size: "pill" }), "w-full sm:w-auto")}>
             Get free estimate
             <ArrowRight aria-hidden strokeWidth={1.5} className="transition-transform group-hover/button:translate-x-1" />
           </Link>

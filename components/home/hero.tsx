@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { HeroParallax } from "@/components/home/hero-parallax";
 import { RotatingPhrase } from "@/components/home/rotating-phrase";
 import { buttonVariants } from "@/components/ui/button";
+import { estimateHref } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const PHRASES = ["that last.", "families love.", "built to stand strong."] as const;
@@ -112,7 +113,7 @@ export function Hero() {
         </p>
 
         <div style={rise(2)} className="anim-rise mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-          <Link href="/cost-calculator" className={cn(buttonVariants({ variant: "pill-dark", size: "pill" }), "w-full sm:w-auto")}>
+          <Link href={estimateHref} className={cn(buttonVariants({ variant: "pill-dark", size: "pill" }), "w-full sm:w-auto")}>
             Get free estimate
             <ArrowRight aria-hidden strokeWidth={1.5} className="transition-transform group-hover/button:translate-x-1" />
           </Link>

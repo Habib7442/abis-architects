@@ -45,10 +45,22 @@ export const site = {
 
 export type Person = { name: string; role: string; photo: string };
 
+// Pricing (/packages) is hidden from the nav for now (user's decision, 26 Nov 2026).
 export const mainNav = [
   { label: "Design", href: "/design" },
   { label: "Construction", href: "/construction" },
+  { label: "Interiors", href: "/interiors" },
   { label: "Projects", href: "/projects" },
-  { label: "Pricing", href: "/packages" },
   { label: "About", href: "/about" },
 ] as const;
+
+/**
+ * Absolute site URL for metadata (canonical, OG images). TODO(client): set NEXT_PUBLIC_SITE_URL to
+ * the live domain; on Vercel the production URL is used automatically until then.
+ */
+export const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3000");
+
+/** Every "Get free estimate" CTA links here (the Smart Estimator). */
+export const estimateHref = "/estimate";

@@ -1,4 +1,4 @@
-import { site } from "@/lib/site";
+import { estimateHref, site } from "@/lib/site";
 
 /** Home page copy. Stand-in for Sanity content until the CMS exists. */
 export const home = {
@@ -92,7 +92,7 @@ export const home = {
     titleLead: "From your plot to your keys, in",
     titleAccent: "five clear steps.",
     lead: "No running between architects, contractors and interior designers. You talk to one team the whole way.",
-    estimate: { label: "Get free estimate", href: "/cost-calculator" },
+    estimate: { label: "Get free estimate", href: estimateHref },
     whatsappLabel: "Chat on WhatsApp",
     youGetLabel: "You get:",
     steps: [
