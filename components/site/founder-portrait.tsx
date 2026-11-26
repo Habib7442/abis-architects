@@ -33,7 +33,7 @@ function PortraitPhoto({ person, sizes }: { person: Person; sizes: string }) {
     // PLACEHOLDER (AGENTS.md §8): visibly marked until the real photo is in /public
     <div className="flex aspect-[3/4] flex-col items-center justify-center gap-3 rounded-sm border border-dashed border-slate/40 bg-card text-slate">
       <Camera aria-hidden strokeWidth={1.5} className="size-8" />
-      <span className="text-sm font-medium">Portrait photo</span>
+      <span className="text-base font-medium">Portrait photo</span>
     </div>
   );
 }
@@ -48,7 +48,7 @@ export function FounderPortrait({ className, style }: { className?: string; styl
         <span className="block font-display text-lg leading-tight font-medium tracking-[-0.02em] text-ink">
           {person.name}
         </span>
-        <span className="mt-0.5 block text-sm text-slate">{person.role}</span>
+        <span className="mt-0.5 block text-base text-slate">{person.role}</span>
       </figcaption>
     </figure>
   );
@@ -66,10 +66,10 @@ export function FoundersPair({ className, style }: { className?: string; style?:
         <figure key={person.photo} className="relative">
           <PortraitPhoto person={person} sizes="(min-width: 1080px) 25vw, 50vw" />
           <figcaption className="absolute -bottom-8 left-2 max-w-[calc(100%-16px)] rounded-sm border border-line bg-card px-3 py-2.5 shadow-[0_24px_60px_rgb(12_13_13/0.12)] sm:left-4 sm:px-4 sm:py-3">
-            <span className="block font-display text-[15px] leading-tight font-medium tracking-[-0.02em] text-ink sm:text-lg">
+            <span className="block font-display text-base leading-tight font-medium tracking-[-0.02em] text-ink sm:text-lg">
               {person.name}
             </span>
-            <span className="mt-0.5 block text-[13px] leading-snug text-slate sm:text-sm">{person.role}</span>
+            <span className="mt-0.5 block text-base leading-snug text-slate">{person.role}</span>
           </figcaption>
         </figure>
       ))}

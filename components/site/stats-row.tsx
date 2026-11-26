@@ -97,7 +97,7 @@ export function StatsRow({ revealIndex = 0, className }: { revealIndex?: number;
             <span className="mt-5 block text-base leading-snug font-bold text-ink group-hover:underline group-hover:underline-offset-4">
               {stat.label}
             </span>
-            <span className="mt-2 block max-w-[30ch] text-[15px] leading-[1.5] text-slate">
+            <span className="mt-2 block max-w-[30ch] text-base leading-[1.5] text-slate">
               {stat.description}
             </span>
           </StatBody>

@@ -16,9 +16,17 @@ export function CountUp({ value, decimals = 0 }: { value: number; decimals?: num
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (!el || reduced.matches) return;
 
     let frame = 0;
+    // If reduced motion is switched on mid-session, stop and show the final value.
+    const onReducedChange = () => {
+      if (!reduced.matches) return;
+      io.disconnect();
+      if (frame) cancelAnimationFrame(frame);
+      el.textContent = final;
+    };
     el.textContent = (0).toFixed(decimals);
     const io = new IntersectionObserver(
       ([entry]) => {
@@ -35,7 +43,9 @@ export function CountUp({ value, decimals = 0 }: { value: number; decimals?: num
       { threshold: 0.4 },
     );
     io.observe(el);
+    reduced.addEventListener("change", onReducedChange);
     return () => {
+      reduced.removeEventListener("change", onReducedChange);
       io.disconnect();
       if (frame) cancelAnimationFrame(frame);
       el.textContent = final;

@@ -156,7 +156,7 @@ function AboutVision() {
           <p className="reveal-item type-lead text-white/90 lg:col-span-7" style={item(4)}>
             {vision.statement}
           </p>
-          <p className="reveal-item flex items-start gap-3 text-[15px] leading-[1.6] text-mist lg:col-span-5 lg:pt-1" style={item(5)}>
+          <p className="reveal-item flex items-start gap-3 text-base leading-[1.6] text-mist lg:col-span-5 lg:pt-1" style={item(5)}>
             <ShieldCheck aria-hidden strokeWidth={1.5} className="mt-0.5 size-5 shrink-0 text-gold" />
             {vision.proof}
           </p>
@@ -179,7 +179,7 @@ function AboutVision() {
                   {step.year}
                 </p>
                 <p className="mt-4 font-display text-lg leading-tight font-medium text-white">{step.title}</p>
-                <p className="mt-2 max-w-[30ch] text-[15px] leading-[1.6] text-mist">{step.text}</p>
+                <p className="mt-2 max-w-[30ch] text-base leading-[1.6] text-mist">{step.text}</p>
               </li>
             ))}
           </ol>
