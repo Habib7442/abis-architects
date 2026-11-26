@@ -7,7 +7,7 @@ import { THEME_STORAGE_KEY } from "@/lib/theme-script";
  * Light/dark page mode (prompts/003). The mode lives on <html data-mode="light|dark">.
  * `data-theme` is a different thing: the per-section dark band switch (DESIGN §14).
  *
- * - No saved choice: follow the system, live.
+ * - No saved choice: light (the default, whatever the device setting).
  * - A saved choice (localStorage) wins until storage is cleared.
  */
 export type ThemeMode = "light" | "dark";
@@ -25,11 +25,9 @@ function readStored(): ThemeMode | null {
   }
 }
 
-const systemQuery = () => window.matchMedia("(prefers-color-scheme: dark)");
-
-/** The mode the page should be in right now: saved choice, else system. */
+/** The mode the page should be in right now: saved choice, else light. */
 export function resolveThemeMode(): ThemeMode {
-  return readStored() ?? (systemQuery().matches ? "dark" : "light");
+  return readStored() ?? "light";
 }
 
 /** Put the resolved mode on <html>. Also used after React's dev remount clears the attribute. */
@@ -58,22 +56,14 @@ export function setThemeMode(mode: ThemeMode) {
 }
 
 function subscribe(onChange: () => void) {
-  const mq = systemQuery();
-  const onSystem = () => {
-    // Only follow the system while the user hasn't chosen.
-    if (!readStored()) applyThemeMode();
-    onChange();
-  };
   const onStorage = (e: StorageEvent) => {
     if (e.key !== THEME_STORAGE_KEY && e.key !== null) return;
     applyThemeMode(); // another tab switched
     onChange();
   };
-  mq.addEventListener("change", onSystem);
   window.addEventListener("storage", onStorage);
   window.addEventListener(CHANGE_EVENT, onChange);
   return () => {
-    mq.removeEventListener("change", onSystem);
     window.removeEventListener("storage", onStorage);
     window.removeEventListener(CHANGE_EVENT, onChange);
   };

@@ -6,8 +6,8 @@ export const THEME_STORAGE_KEY = "abis-theme";
 
 /**
  * Runs in <head> before first paint, so there is no flash. Kept dependency-free and ES5.
- * The system check is outside the try, so a blocked localStorage still follows the system.
+ * Default is light (the user's choice): only a saved "dark" switches it.
  */
 export const themeInitScript = `(function(){var d=document.documentElement,t=null;try{t=localStorage.getItem(${JSON.stringify(
   THEME_STORAGE_KEY,
-)})}catch(e){}if(t!=="light"&&t!=="dark"){t=window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}d.setAttribute("data-mode",t)})()`;
+)})}catch(e){}d.setAttribute("data-mode",t==="dark"?"dark":"light")})()`;

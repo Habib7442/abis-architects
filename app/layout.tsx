@@ -36,11 +36,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  // Follows the system; the in-page toggle only changes the page itself.
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0c0d0d" },
-  ],
+  // Light by default (the site opens in light mode whatever the device setting).
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
