@@ -5,10 +5,11 @@ import { DesignVsReality } from "@/components/home/design-vs-reality";
 import { Reveal } from "@/components/motion/reveal";
 import { FeaturedCard } from "@/components/projects/featured-card";
 import { MasonryGallery } from "@/components/projects/masonry-gallery";
+import { CurrentlyBuilding } from "@/components/sections/currently-building";
 import { CtaBand } from "@/components/site/cta-band";
 import { Chip } from "@/components/ui/chip";
 import { projectsPage as c } from "@/lib/content/projects-page";
-import { flagshipImages, flagships, galleryCategories, galleryImages } from "@/lib/projects";
+import { flagshipImages, flagships, galleryCategories, galleryImages, galleryStatuses } from "@/lib/projects";
 import { estimateHref, site } from "@/lib/site";
 
 const cover = flagshipImages(flagships[0])[0];
@@ -122,6 +123,7 @@ function Gallery() {
         <MasonryGallery
           images={galleryImages}
           categories={galleryCategories}
+          statuses={galleryStatuses}
           allLabel={c.gallery.allLabel}
           pageSize={c.gallery.pageSize}
           loadMoreLabel={c.gallery.loadMore}
@@ -136,6 +138,12 @@ export default function ProjectsPage() {
     <main>
       <Header />
       <Featured />
+      {/* Follows the page mode here (not a dark band). */}
+      <section aria-label="Currently building" className="border-t border-line bg-paper py-16 lg:py-24">
+        <div className={container}>
+          <CurrentlyBuilding />
+        </div>
+      </section>
       <Gallery />
       <DesignVsReality showViewAll={false} />
       <CtaBand

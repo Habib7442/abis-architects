@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 import { ArrowRight, CircleCheck } from "lucide-react";
 import { ProjectsGallery } from "@/components/home/projects-gallery";
 import { Reveal } from "@/components/motion/reveal";
+import { CurrentlyBuilding } from "@/components/sections/currently-building";
 import { buttonVariants } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/chip";
 import { home } from "@/lib/content/home";
@@ -42,6 +43,9 @@ export function ProjectsShowcase() {
         </Reveal>
 
         <ProjectsGallery projects={projects} categories={projectCategories} allLabel={c.allLabel} />
+
+        {/* Thin divider + 64px, then the in-progress row; "View all" stays last. */}
+        <CurrentlyBuilding headingLevel="h3" className="mt-16 border-t border-line pt-16" />
 
         <div className="mt-12 flex justify-center lg:mt-16">
           <Link href={c.viewAll.href} className={cn(buttonVariants({ variant: "pill-light", size: "pill" }))}>

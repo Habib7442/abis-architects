@@ -27,9 +27,13 @@ export const statusLabel: Record<ProjectStatus, string> = {
 export type ProjectImage = Omit<RawImage, "watermark"> & {
   category: GalleryCategory;
   location: string | null;
+  /** Only set where known (real site photos); renders have no status. */
+  status: ProjectStatus | null;
   watermark: WatermarkCorner | null;
   alt: string;
 };
+
+export const galleryStatuses: ProjectStatus[] = ["completed", "under-construction"];
 
 /* ------------------------------------------------------------------ Curation rules */
 
@@ -69,11 +73,23 @@ function categoryOf(img: RawImage): GalleryCategory {
   return "Homes";
 }
 
-/** Known locations only (user's list). Everything else shows no location. */
+/** Known locations only. Everything else shows no location. */
 function locationOf(img: RawImage): string | null {
   const n = img.folder.slice(0, 2);
-  if (["12", "13", "19", "26", "27"].includes(n)) return "Silchar";
+  if (["12", "13", "19"].includes(n)) return "Silchar";
   if (n === "25") return "Hailakandi";
+  if (img.id === "26-104") return "Silchar"; // The Grand Villa
+  // TODO(content): the other 26/27 construction sites are in Silchar, Hailakandi or Bhaga
+  // (Silchar); ABIS to confirm which is where. Hidden until then.
+  return null;
+}
+
+/** Status only where the photo shows it. */
+function statusOf(img: RawImage): ProjectStatus | null {
+  const n = img.folder.slice(0, 2);
+  if (n === "26" || n === "27") return "under-construction"; // site photos of work in progress
+  if (n === "19") return "completed"; // Masjid-e-Bilal, finished and in use
+  if (["25-091", "25-092", "25-096"].includes(img.id)) return "completed"; // SP Office gate, built
   return null;
 }
 
@@ -88,11 +104,13 @@ const NOUN: Record<GalleryCategory, string> = {
 function toProjectImage(img: RawImage): ProjectImage {
   const category = categoryOf(img);
   const location = locationOf(img);
+  const status = statusOf(img);
   const isRender = RENDER_FOLDERS.has(img.folder.slice(0, 2));
   const watermark = img.id in WATERMARK_OVERRIDES ? WATERMARK_OVERRIDES[img.id] : isRender ? img.watermark : null;
   // TODO(content): per-image alt text (what, where, status) once ABIS names each project.
-  const alt = `${isRender ? "3D design" : "Photo"} of ${NOUN[category]} by The ABIS Architects${location ? ` in ${location}` : ""}`;
-  return { ...img, category, location, watermark, alt };
+  const kind = isRender ? "3D design" : status === "under-construction" ? "Site photo" : "Photo";
+  const alt = `${kind} of ${NOUN[category]}${status === "under-construction" ? " under construction" : ""} by The ABIS Architects${location ? ` in ${location}` : ""}`;
+  return { ...img, category, location, status, watermark, alt };
 }
 
 export const allImages: ProjectImage[] = rawImages.filter((r) => !SKIP.has(r.id)).map(toProjectImage);
@@ -207,7 +225,18 @@ export const flagships: Flagship[] = [
 export const getFlagship = (slug: string) => flagships.find((f) => f.slug === slug);
 export const flagshipImages = (f: Flagship) => f.imageIds.map(imageById);
 
-const flagshipIds = new Set(flagships.flatMap((f) => f.imageIds));
+/**
+ * The full gallery: every curated image, flagship ones included, so the Completed / Under
+ * construction filter has the real site photos to show (they all belong to flagships).
+ */
+export const galleryImages: ProjectImage[] = allImages;
 
-/** Everything that isn't part of a flagship project. */
-export const galleryImages: ProjectImage[] = allImages.filter((i) => !flagshipIds.has(i.id));
+/* ------------------------------------------------------------------ Currently building */
+
+export type BuildingItem = { image: ProjectImage; href?: string; title?: string };
+
+/** Real site photos of work in progress; The Grand Villa first, linking to its page. */
+export const currentlyBuilding: BuildingItem[] = [
+  { image: imageById("26-104"), href: "/projects/the-grand-villa", title: "The Grand Villa" },
+  ...allImages.filter((i) => i.status === "under-construction" && i.id !== "26-104").map((image) => ({ image })),
+];

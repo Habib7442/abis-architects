@@ -4,12 +4,34 @@ import Image from "next/image";
 import { useRef, useState, type CSSProperties } from "react";
 import { Reveal } from "@/components/motion/reveal";
 import { Lightbox, type LightboxItem } from "@/components/site/lightbox";
-import { cropStyle, WATERMARK_SCALE, type GalleryCategory, type ProjectImage } from "@/lib/projects";
+import { cropStyle, statusLabel, WATERMARK_SCALE, type GalleryCategory, type ProjectImage, type ProjectStatus } from "@/lib/projects";
 import { cn } from "@/lib/utils";
 
 type Filter = GalleryCategory | "all";
+type StatusFilter = ProjectStatus | "all";
+type Selection = { category: Filter; status: StatusFilter };
 const FADE_MS = 200;
 const GAP_PX = 16;
+
+/** Filter pill: active = ink (white in dark mode); a pill with nothing to show is disabled. */
+function Pill({ label, n, active, small, onClick }: { label: string; n: number; active: boolean; small?: boolean; onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      aria-pressed={active}
+      disabled={!active && n === 0}
+      onClick={onClick}
+      className={cn(
+        "inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border text-base font-semibold whitespace-nowrap transition-[background-color,border-color,color,opacity] duration-200 ease-arch disabled:opacity-40 motion-reduce:transition-none",
+        small ? "px-3.5" : "px-4",
+        active ? "border-ink bg-ink text-paper" : "border-line bg-paper text-ink hover:border-ink/40",
+      )}
+    >
+      {label}
+      <span className={cn("text-sm font-medium tabular-nums", active ? "text-paper/70" : "text-slate")}>{n}</span>
+    </button>
+  );
+}
 
 const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -37,6 +59,7 @@ function distribute(items: ProjectImage[], cols: number) {
 export function MasonryGallery({
   images,
   categories,
+  statuses,
   allLabel = "All",
   pageSize,
   loadMoreLabel = "Load more",
@@ -45,26 +68,31 @@ export function MasonryGallery({
   images: ProjectImage[];
   /** Omit to hide the filter bar. */
   categories?: GalleryCategory[];
+  /** Status filter (All · Completed · Under construction); only images with a known status match. */
+  statuses?: ProjectStatus[];
   allLabel?: string;
   /** Omit to show every image. */
   pageSize?: number;
   loadMoreLabel?: string;
   filterLabel?: string;
 }) {
-  const [filter, setFilter] = useState<Filter>("all");
-  const [shown, setShown] = useState<Filter>("all");
+  const [filter, setFilter] = useState<Selection>({ category: "all", status: "all" });
+  const [shown, setShown] = useState<Selection>({ category: "all", status: "all" });
   const [fading, setFading] = useState(false);
   const [count, setCount] = useState(pageSize ?? images.length);
   const [open, setOpen] = useState<number | null>(null);
   const timer = useRef<number | undefined>(undefined);
   const topRef = useRef<HTMLDivElement>(null);
 
-  const filtered = shown === "all" ? images : images.filter((i) => i.category === shown);
+  const matches = (i: ProjectImage, sel: Selection) =>
+    (sel.category === "all" || i.category === sel.category) && (sel.status === "all" || i.status === sel.status);
+  const filtered = images.filter((i) => matches(i, shown));
   const visible = filtered.slice(0, count);
   const remaining = filtered.length - visible.length;
 
-  function choose(next: Filter) {
-    if (next === filter) return;
+  function choose(change: Partial<Selection>) {
+    const next = { ...filter, ...change };
+    if (next.category === filter.category && next.status === filter.status) return;
     setFilter(next);
     window.clearTimeout(timer.current);
     const swap = () => {
@@ -89,10 +117,19 @@ export function MasonryGallery({
     }, FADE_MS);
   }
 
-  const counts = new Map<Filter, number>([["all", images.length]]);
-  categories?.forEach((c) => counts.set(c, images.filter((i) => i.category === c).length));
-  const tabs: { value: Filter; label: string }[] = categories
-    ? [{ value: "all", label: allLabel }, ...categories.filter((c) => counts.get(c)).map((c) => ({ value: c as Filter, label: c }))]
+  // Each pill's count reflects the other filter's current choice.
+  const countFor = (sel: Selection) => images.filter((i) => matches(i, sel)).length;
+  const tabs: { value: Filter; label: string; n: number }[] = categories
+    ? [
+        { value: "all" as Filter, label: allLabel, n: countFor({ ...filter, category: "all" }) },
+        ...categories.map((c) => ({ value: c as Filter, label: c as string, n: countFor({ ...filter, category: c }) })),
+      ]
+    : [];
+  const statusTabs: { value: StatusFilter; label: string; n: number }[] = statuses
+    ? [
+        { value: "all" as StatusFilter, label: "Any status", n: countFor({ ...filter, status: "all" }) },
+        ...statuses.map((st) => ({ value: st as StatusFilter, label: statusLabel[st], n: countFor({ ...filter, status: st }) })),
+      ]
     : [];
 
   const tile = ({ img, index }: { img: ProjectImage; index: number }, sizes: string) => {
@@ -149,32 +186,22 @@ export function MasonryGallery({
 
   return (
     <>
-      {categories && (
-        <div
-          role="group"
-          aria-label={filterLabel}
-          className="sticky top-(--header-h) z-30 -mx-(--pad) border-b border-line bg-concrete/90 px-(--pad) py-3 backdrop-blur-md"
-        >
-          <div className="scrollbar-none -my-1 flex gap-2 overflow-x-auto py-1">
-            {tabs.map((t) => {
-              const active = t.value === filter;
-              return (
-                <button
-                  key={t.value}
-                  type="button"
-                  aria-pressed={active}
-                  onClick={() => choose(t.value)}
-                  className={cn(
-                    "inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border px-4 text-base font-semibold whitespace-nowrap transition-[background-color,border-color,color] duration-200 ease-arch motion-reduce:transition-none",
-                    active ? "border-ink bg-ink text-paper" : "border-line bg-paper text-ink hover:border-ink/40",
-                  )}
-                >
-                  {t.label}
-                  <span className={cn("text-sm font-medium tabular-nums", active ? "text-paper/70" : "text-slate")}>{counts.get(t.value)}</span>
-                </button>
-              );
-            })}
-          </div>
+      {(tabs.length > 0 || statusTabs.length > 0) && (
+        <div className="sticky top-(--header-h) z-30 -mx-(--pad) flex flex-col gap-1.5 border-b border-line bg-concrete/90 px-(--pad) py-3 backdrop-blur-md">
+          {tabs.length > 0 && (
+            <div role="group" aria-label={filterLabel} className="scrollbar-none -my-1 flex min-w-0 gap-2 overflow-x-auto py-1">
+              {tabs.map((t) => (
+                <Pill key={t.value} label={t.label} n={t.n} active={t.value === filter.category} onClick={() => choose({ category: t.value })} />
+              ))}
+            </div>
+          )}
+          {statusTabs.length > 0 && (
+            <div role="group" aria-label="Filter by status" className="scrollbar-none -my-1 flex gap-2 overflow-x-auto py-1">
+              {statusTabs.map((t) => (
+                <Pill key={t.value} label={t.label} n={t.n} small active={t.value === filter.status} onClick={() => choose({ status: t.value })} />
+              ))}
+            </div>
+          )}
         </div>
       )}
 
