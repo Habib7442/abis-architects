@@ -73,4 +73,15 @@ export const home = {
       },
     ],
   },
+
+  // The projects themselves are fixtures in lib/content/projects.ts.
+  projects: {
+    eyebrow: "Our work",
+    // "Real families." is set in gold italics by the component.
+    titleLead: "Real projects.",
+    titleAccent: "Real families.",
+    aside: "Every project here is designed by our in-house team. No stock photos, no AI images.",
+    allLabel: "All",
+    viewAll: { label: "View all projects", href: "/projects" },
+  },
 } as const;

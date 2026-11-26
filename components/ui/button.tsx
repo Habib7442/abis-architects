@@ -20,6 +20,8 @@ const buttonVariants = cva(
         whatsapp: "bg-whatsapp text-ink-fixed hover:bg-[color-mix(in_oklab,var(--whatsapp),white_10%)]",
         pill: "rounded-full border-ink/15 bg-card text-ink hover:border-ink/40",
         "pill-dark": "rounded-full bg-ink text-paper hover:bg-ink-3",
+        // White pill for always-dark sections (same in both page modes)
+        "pill-light": "rounded-full bg-white text-ink-fixed hover:bg-white/85",
         link: "h-auto px-0 text-ink hover:translate-y-0 hover:underline underline-offset-4",
       },
       size: {

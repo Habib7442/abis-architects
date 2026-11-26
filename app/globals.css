@@ -74,6 +74,8 @@
    ------------------------------------------------------------------ */
 :root {
   --ink-fixed: #0c0d0d;
+  /* Always-dark gallery band (home "Our projects"), the same in both page modes. */
+  --night: #08090a;
   color-scheme: light;
 
   /* Home hero (prompts/005): day photo in light mode, night render in dark mode. */
@@ -86,7 +88,9 @@
   --hero-fade-h: 80px;
 }
 
-:root[data-mode="dark"] {
+/* Page dark mode, and any always-dark band ([data-theme="dark"]) in either mode. */
+:root[data-mode="dark"],
+[data-theme="dark"] {
   color-scheme: dark;
 
   --paper: #0c0d0d;
@@ -173,7 +177,7 @@
 
 [data-theme="dark"] {
   --focus: var(--gold);
-  --scrollbar-track: var(--ink-2);
+  --scrollbar-track: #141616; /* fixed: --ink-2 flips to light inside dark bands */
   --scrollbar-thumb: rgb(255 255 255 / 0.25);
   --scrollbar-thumb-hover: var(--gold);
   --scrollbar-thumb-active: var(--gold);
@@ -188,6 +192,7 @@
   --color-ink-2: var(--ink-2);
   --color-ink-3: var(--ink-3);
   --color-ink-fixed: var(--ink-fixed);
+  --color-night: var(--night);
   --color-slate: var(--slate);
   --color-mist: var(--mist);
   --color-gold: var(--gold);

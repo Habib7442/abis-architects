@@ -4,6 +4,7 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site/header";
 import { ScrollProgress } from "@/components/site/scroll-progress";
 import { ThemeSync } from "@/components/site/theme-toggle";
+import { InlineScript } from "@/components/site/inline-script";
 import { themeInitScript } from "@/lib/theme-script";
 import { cn } from "@/lib/utils";
 
@@ -52,7 +53,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <head>
         {/* Sets <html data-mode> before first paint: saved choice, else the system (no flash). */}
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <InlineScript html={themeInitScript} />
       </head>
       {/* Browser extensions inject attributes on <body> before hydration; ignore those attribute diffs only. */}
       <body className="min-h-svh" suppressHydrationWarning>

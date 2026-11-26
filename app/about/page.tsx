@@ -32,8 +32,8 @@ function pickImage(img: { preferred: string; preferredAlt: string; fallback: str
     : { src: img.fallback, alt: img.fallbackAlt };
 }
 
-/** Full-container 16:9 image. */
-function WideImage({ src, alt, className }: { src: string; alt: string; className?: string }) {
+/** Full-container 16:9 image. `priority` for the above-the-fold hero (it is the page's LCP). */
+function WideImage({ src, alt, className, priority }: { src: string; alt: string; className?: string; priority?: boolean }) {
   return (
     <div className={cn("relative aspect-video overflow-hidden rounded-sm bg-concrete-2", className)}>
       <Image
@@ -41,6 +41,8 @@ function WideImage({ src, alt, className }: { src: string; alt: string; classNam
         alt={alt}
         fill
         sizes="(min-width: 1320px) 1176px, (min-width: 1080px) 90vw, 100vw"
+        loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : "auto"}
         className="object-cover"
       />
     </div>
@@ -71,7 +73,7 @@ function AboutHero() {
         <p className="reveal-item mt-6 max-w-[560px] type-lead text-slate lg:mt-8" style={item(2)}>
           {hero.lead}
         </p>
-        <WideImage {...image} className="reveal-item mt-12 lg:mt-16" />
+        <WideImage {...image} priority className="reveal-item mt-12 lg:mt-16" />
       </Reveal>
     </section>
   );
